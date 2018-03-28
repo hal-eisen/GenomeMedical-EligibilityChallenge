@@ -1,0 +1,43 @@
+As per our conversation earlier, I switched the order of the directive
+and the data, moving the customer name to the end of the RESTful
+endpoint. This confirms much more closely with how Flask expects
+parameters and saving some work.
+
+I was very happy to see versioning included up front in the spec.
+
+To install the application, you'll need to have Python's Flask
+microframework available. Directions are available here:
+http://flask.pocoo.org/docs/0.12/installation/#installation
+
+The app is expecting a TSV data file (search for file_path in the
+source code), and adjust accordingly. This code currently assumes the
+employee_id is the first column in the file, but this is configurable
+by changing the required_fields parameter.  The app also supports
+complex keys of multiple fields, although Acme does not use this
+feature.
+
+I've included some sample configuration data for alternate methods of
+checking eligibility, but did not implement them.
+
+Launch the service like this:
+bash$ FLASK_APP=eligibility-challenge.py flask run
+
+Confirm the service is running
+bash$ curl http://localhost:5000/v1/ping
+
+Explore the service (usage message, supported endpoints)
+bash$ curl http://localhost:5000/
+
+Inspect the list of supported customers
+bash$ curl http://localhost:5000/v1/customers
+
+Retrieve the list of required fields for the Acme customer
+bash$ curl http://localhost:5000/v1/config/acme
+
+Test whether a particular employee_id is eligible for coverage
+bash$ curl -X POST -F employee_id=1 http://localhost:5000/v1/check/acme
+
+Future improvements which I think are important is authentication and
+authorization. I might also add support for more fine-grained
+eligibility checks, where some customers are eligible for one subset
+of services, while other customers can access a different subset.
