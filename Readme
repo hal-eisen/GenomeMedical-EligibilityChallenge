@@ -1,6 +1,6 @@
 As per our conversation earlier, I switched the order of the directive
 and the data, moving the customer name to the end of the RESTful
-endpoint. This confirms much more closely with how Flask expects
+endpoint. This conforms more closely with how Flask expects
 parameters and saving some work.
 
 I was very happy to see versioning included up front in the spec.
